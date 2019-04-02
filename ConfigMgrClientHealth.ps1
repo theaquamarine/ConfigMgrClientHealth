@@ -3428,6 +3428,7 @@ Begin {
             [Parameter(Mandatory=$true)]$Log,
             [Parameter(Mandatory=$false)]$Mode
             )
+	    # This also is set up so that you need to call it twice to log to both places, specifying mode manually
         # Start the logfile
         Write-Verbose "Start Update-LogFile"
         #$share = Get-XMLConfigLoggingShare
