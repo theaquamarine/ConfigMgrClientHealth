@@ -2153,6 +2153,8 @@ Begin {
                 $text = 'Missing or faulty driver: ' +$device.Name + '. Device ID: ' + $device.DeviceID
                 Write-Warning $text
                 if (-NOT($FileLogLevel -like "clientlocal")) { Out-LogFile -Xml $xml -Text $text }
+		# The only way to get this to write to local ConfigMgrClientHealth is add -Mode 'Local', which is wrong
+		# Suspect the same will happen with other Out-Logfile uses - believe Update-SQL does it too.
             }
         }
         else {
