@@ -66,11 +66,11 @@ Begin {
 
     #region proxy functions for logging
     # #Write-Verbose
-    # $WriteVerboseMetadata = New-Object System.Management.Automation.CommandMetadata (Get-Command Write-Verbose)
-    # $WriteVerboseBinding = [System.Management.Automation.ProxyCommand]::GetCmdletBindingAttribute($WriteVerboseMetadata)
-    # $WriteVerboseParams = [System.Management.Automation.ProxyCommand]::GetParamBlock($WriteVerboseMetadata)
-    # $WriteVerboseWrapped = {Microsoft.Powershell.Utility\Write-Verbose @PSBoundParameters; Out-LogFile -Text $Message}
-    # ${Function:Write-Verbose} = '{0}param({1}) {2}' -f $WriteVerboseBinding, $WriteVerboseParams, $WriteVerboseWrapped
+    $WriteVerboseMetadata = New-Object System.Management.Automation.CommandMetadata (Get-Command Write-Verbose)
+    $WriteVerboseBinding = [System.Management.Automation.ProxyCommand]::GetCmdletBindingAttribute($WriteVerboseMetadata)
+    $WriteVerboseParams = [System.Management.Automation.ProxyCommand]::GetParamBlock($WriteVerboseMetadata)
+    $WriteVerboseWrapped = {Microsoft.Powershell.Utility\Write-Verbose @PSBoundParameters; switch($VerbosePreference){'Continue'{Out-LogFile -Text $Message}}}
+    ${Function:Write-Verbose} = '{0}param({1}) {2}' -f $WriteVerboseBinding, $WriteVerboseParams, $WriteVerboseWrapped
 
     #Write-Host
     $WriteHostMetadata = New-Object System.Management.Automation.CommandMetadata (Get-Command Write-Host)
